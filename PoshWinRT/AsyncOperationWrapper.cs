@@ -6,7 +6,42 @@ namespace PoshWinRT
 {
     public class AsyncOperationWrapper<T> : IDisposable
     {
+        public event EventHandler<AsyncOperationEventArg> CompletedEvent;
+        public class AsyncOperationEventArg : EventArgs
+        {
+            public AsyncOperationEventArg(IAsyncOperation<T> asyncOperation)
+            {
+                this.asyncOperation = asyncOperation;
+            }
+            private IAsyncOperation<T> asyncOperation;
+            public IAsyncOperation<T> AsyncOperation { get { return this.asyncOperation; } }
+        }
+
         private IAsyncOperation<T> _asyncOperation;
+        private AsyncOperationEventArg _result = null;
+        private bool _ready = false;
+
+        public void Start()
+        {
+            SetResult(null, true);
+        }
+
+        private void SetResult(AsyncOperationEventArg typedEventArg, bool ready)
+        {
+            if (this._result == null)
+            {
+                this._result = typedEventArg;
+            }
+            if (!this._ready)
+            {
+                this._ready = ready;
+            }
+
+            if (this._ready && this._result != null)
+            {
+                this.CompletedEvent?.Invoke(this, this._result);
+            }
+        }
 
         public AsyncOperationWrapper(object asyncOperation)
         {
