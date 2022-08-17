@@ -1,4 +1,3 @@
-steps:
 name: ASP.NET CI
 on: [push]
 jobs:
