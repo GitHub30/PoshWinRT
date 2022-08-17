@@ -1,14 +1,17 @@
-name: ASP.NET CI
+name: MSBuild
+
 on: [push]
+    
 jobs:
   build:
-    runs-on: windows-latest
-
+    runs-on: windows-2019
     steps:
-    - uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Setup MSBuild.exe
-      uses: warrenbuckley/Setup-MSBuild@v1
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: MSBuild
-      run: msbuild PoshWinRT.csproj
+      - run: |
+          msbuild PoshWinRT.csproj
+
