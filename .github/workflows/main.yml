@@ -13,5 +13,5 @@ jobs:
         uses: microsoft/setup-msbuild@v1.0.2
 
       - run: |
-          msbuild PoshWinRT.csproj
+          msbuild PoshWinRT/PoshWinRT.csproj
 
