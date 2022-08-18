@@ -13,7 +13,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
 
       - run: |
-          msbuild -r PoshWinRT/PoshWinRT.csproj
+          msbuild -r
 
       - name: Release
         uses: softprops/action-gh-release@v1
